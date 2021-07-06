@@ -2,6 +2,7 @@ package org.h2.value;
 
 import org.h2.engine.CastDataProvider;
 import org.h2.engine.SysProperties;
+import org.h2.util.Argon2Singleton;
 import org.h2.util.StringUtils;
 
 /**
@@ -9,8 +10,7 @@ import org.h2.util.StringUtils;
  */
 public final class ValuePassword extends ValueStringBase {
   private ValuePassword(String value) {
-    // TODO: this should probably hash the value.
-    super(value);
+    super(Argon2Singleton.get().hash(value.toCharArray()));
   }
 
   @Override
@@ -21,10 +21,17 @@ public final class ValuePassword extends ValueStringBase {
   @Override
   public int compareTypeSafe(Value v, CompareMode mode,
       CastDataProvider provider) {
-    // TODO: this needs more logic to do equality comparisons as hash checks
-    //  and ordering comparisions the default way.
-    return mode.compareString(convertToChar().getString(),
-        v.convertToChar().getString(), false);
+    char[] other_pass = v.convertToChar().getString().toCharArray();
+    if (Argon2Singleton.get().verify(convertToChar().getString(), other_pass)) {
+      return 0;
+    } else {
+      // This is almost certainly the wrong behavior, because it forces
+      // mismatched passwords to be less than other passwords.  But password
+      // hashes aren't really orderable?  Particularly because making a new
+      // password hash also creates a new salt, so repeated invocations with
+      // the same string will have different orderings.
+      return -1;
+    }
   }
 
   @Override
@@ -45,12 +52,15 @@ public final class ValuePassword extends ValueStringBase {
    * @return the password version of the string.
    */
   public static ValuePassword get(String s) {
-    // TODO: figure out what StringUtils.cache(String) does and determine if
-    //  that should be called on the password hash or the raw password.
-    ValuePassword obj = new ValuePassword(StringUtils.cache(s));
-    if (s.length() > SysProperties.OBJECT_CACHE_MAX_PER_ELEMENT_SIZE) {
+    String hashed_password = Argon2Singleton.get().hash(s.toCharArray());
+    ValuePassword obj = new ValuePassword(hashed_password);
+    if (hashed_password.length() > SysProperties.OBJECT_CACHE_MAX_PER_ELEMENT_SIZE) {
       return obj;
     }
+    // Value.cache caches based on the Value object's hash code, which is
+    // computed by xoring the value type's hash code with the contained
+    // value's hash code.  This is fine (if unnecessary) for passwords,
+    // because the salt values will make them unique.
     return (ValuePassword) Value.cache(obj);
   }
 }
