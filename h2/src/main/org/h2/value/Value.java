@@ -265,9 +265,14 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
     public static final int ROW = ARRAY + 1;
 
     /**
+     * The value type for PASSWORD values.
+     */
+    public static final int PASSWORD = ROW + 1;
+
+    /**
      * The number of value types.
      */
-    public static final int TYPE_COUNT = ROW + 1;
+    public static final int TYPE_COUNT = PASSWORD + 1;
 
     /**
      * Group for untyped NULL data type.
