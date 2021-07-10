@@ -61,6 +61,10 @@ public class Build extends BuildBase {
 
     private static final String SLF4J_VERSION = "1.7.30";
 
+    private static final String ARGON2_VERSION = "2.10.1";
+
+    private static final String JNA_VERSION = "5.8.0";
+
     private boolean filesMissing;
 
     /**
@@ -150,6 +154,8 @@ public class Build extends BuildBase {
                 File.pathSeparator + "ext/org.osgi.enterprise-" + OSGI_VERSION + ".jar" +
                 File.pathSeparator + "ext/jts-core-" + JTS_VERSION + ".jar" +
                 File.pathSeparator + "ext/asm-" + ASM_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-" + ARGON2_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-nolibs-" + ARGON2_VERSION + ".jar" +
                 File.pathSeparator + javaToolsJar;
         FileList files = files("src/main");
         StringList args = args("-Xlint:unchecked", "-d", "temp", "-sourcepath", "src/main", "-classpath", classpath);
@@ -399,6 +405,15 @@ public class Build extends BuildBase {
         downloadUsingMaven("ext/asm-" + ASM_VERSION + ".jar",
                 "org.ow2.asm", "asm", ASM_VERSION,
                 "3f5199523fb95304b44563f5d56d9f5a07270669");
+        downloadOrVerify("ext/de.mkammerer.argon2-jvm-" + ARGON2_VERSION + ".jar",
+            "de/mkammerer", "argon2-jvm",
+            ARGON2_VERSION, "53f30074c56089e0fbd317e8fb10ac3336d34666", offline);
+        downloadOrVerify("ext/de.mkammerer.argon2-jvm-nolibs-" + ARGON2_VERSION + ".jar",
+            "de/mkammerer", "argon2-jvm-nolibs",
+            ARGON2_VERSION, "c5e403259347751eb0c41b4b69f9ca774601b08b", offline);
+        downloadOrVerify("ext/net.java.dev.jna-" + JNA_VERSION + ".jar",
+            "net/java/dev/jna", "jna",
+            JNA_VERSION, "3551d8d827e54858214107541d3aff9c615cb615", offline);
     }
 
     private void downloadOrVerify(String target, String group, String artifact,
