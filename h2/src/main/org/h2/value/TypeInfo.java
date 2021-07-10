@@ -207,6 +207,11 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
      */
     public static final TypeInfo TYPE_ROW_EMPTY;
 
+    /**
+     * PASSWORD type
+     */
+    public static final TypeInfo TYPE_PASSWORD;
+
     private static final TypeInfo[] TYPE_INFOS_BY_VALUE_TYPE;
 
     private final int valueType;
@@ -272,7 +277,10 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         infos[Value.ARRAY] = TYPE_ARRAY_UNKNOWN = new TypeInfo(Value.ARRAY);
         infos[Value.ROW] = TYPE_ROW_EMPTY = new TypeInfo(Value.ROW, -1L, -1, //
                 new ExtTypeInfoRow(new LinkedHashMap<>()));
+        //PASSWORD
+        infos[Value.PASSWORD] = TYPE_PASSWORD = new TypeInfo(Value.PASSWORD);
         TYPE_INFOS_BY_VALUE_TYPE = infos;
+
     }
 
     /**

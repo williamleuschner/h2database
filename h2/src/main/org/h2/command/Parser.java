@@ -378,6 +378,7 @@ import org.h2.value.ValueTimestampTimeZone;
 import org.h2.value.ValueUuid;
 import org.h2.value.ValueVarbinary;
 import org.h2.value.ValueVarchar;
+import org.h2.value.ValuePassword;
 
 /**
  * The parser is used to convert a SQL statement string to an command object.

@@ -68,6 +68,7 @@ import org.h2.value.ValueUuid;
 import org.h2.value.ValueVarbinary;
 import org.h2.value.ValueVarchar;
 import org.h2.value.ValueVarcharIgnoreCase;
+import org.h2.value.ValuePassword;
 import org.h2.value.lob.LobData;
 import org.h2.value.lob.LobDataDatabase;
 import org.h2.value.lob.LobDataInMemory;
@@ -122,6 +123,7 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
     private static final int TIME_TZ = 136;
     private static final int BINARY = 137;
     private static final int DECFLOAT = 138;
+    private static final int PASSWORD = 150;
 
     final DataHandler handler;
     final CastDataProvider provider;

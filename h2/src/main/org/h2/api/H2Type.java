@@ -6,7 +6,6 @@
 package org.h2.api;
 
 import java.sql.SQLType;
-
 import org.h2.value.ExtTypeInfoRow;
 import org.h2.value.TypeInfo;
 import org.h2.value.Value;
@@ -241,6 +240,11 @@ public final class H2Type implements SQLType {
      * The UUID data type.
      */
     public static final H2Type UUID = new H2Type(TypeInfo.TYPE_UUID, "UUID");
+
+    /**
+     * The PASSWORD data type
+     */
+    public static final H2Type PASSWORD = new H2Type(TypeInfo.TYPE_PASSWORD, "PASSWORD");
 
     // Collections
 
