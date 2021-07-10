@@ -191,6 +191,8 @@ public class Build extends BuildBase {
                 "ext/lucene-core-" + LUCENE_VERSION + ".jar" +
                 File.pathSeparator + "ext/lucene-analyzers-common-" + LUCENE_VERSION + ".jar" +
                 File.pathSeparator + "ext/lucene-queryparser-" + LUCENE_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-" + ARGON2_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-nolibs-" + ARGON2_VERSION + ".jar" +
                 File.pathSeparator + "ext/jts-core-" + JTS_VERSION + ".jar",
                 "-docletpath", "bin" + File.pathSeparator + "temp",
                 "-doclet", "org.h2.build.doclet.ResourceDoclet");
@@ -270,6 +272,8 @@ public class Build extends BuildBase {
             File.pathSeparator + "ext/jts-core-" + JTS_VERSION + ".jar" +
             File.pathSeparator + "ext/slf4j-api-" + SLF4J_VERSION + ".jar" +
             File.pathSeparator + "ext/slf4j-nop-" + SLF4J_VERSION + ".jar" +
+            File.pathSeparator + "ext/de.mkammerer.argon2-jvm-" + ARGON2_VERSION + ".jar" +
+            File.pathSeparator + "ext/de.mkammerer.argon2-jvm-nolibs-" + ARGON2_VERSION + ".jar" +
             File.pathSeparator + javaToolsJar;
         // Run tests
         execJava(args(
@@ -596,6 +600,8 @@ public class Build extends BuildBase {
                 "ext/lucene-core-" + LUCENE_VERSION + ".jar" +
                 File.pathSeparator + "ext/lucene-analyzers-common-" + LUCENE_VERSION + ".jar" +
                 File.pathSeparator + "ext/lucene-queryparser-" + LUCENE_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-" + ARGON2_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-nolibs-" + ARGON2_VERSION + ".jar" +
                 File.pathSeparator + "ext/jts-core-" + JTS_VERSION + ".jar",
                 "-docletpath", "bin" + File.pathSeparator + "temp",
                 "-doclet", "org.h2.build.doclet.Doclet");
@@ -628,6 +634,8 @@ public class Build extends BuildBase {
                 File.pathSeparator + "ext/org.osgi.enterprise-" + OSGI_VERSION + ".jar" +
                 File.pathSeparator + "ext/jts-core-" + JTS_VERSION + ".jar" +
                 File.pathSeparator + "ext/asm-" + ASM_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-" + ARGON2_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-nolibs-" + ARGON2_VERSION + ".jar" +
                 File.pathSeparator + "ext/junit-jupiter-api-" + JUNIT_VERSION + ".jar",
                 "-subpackages", "org.h2");
 
@@ -644,6 +652,8 @@ public class Build extends BuildBase {
                 File.pathSeparator + "ext/lucene-queryparser-" + LUCENE_VERSION + ".jar" +
                 File.pathSeparator + "ext/org.osgi.core-" + OSGI_VERSION + ".jar" +
                 File.pathSeparator + "ext/org.osgi.enterprise-" + OSGI_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-" + ARGON2_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-nolibs-" + ARGON2_VERSION + ".jar" +
                 File.pathSeparator + "ext/jts-core-" + JTS_VERSION + ".jar",
                 "-subpackages", "org.h2.mvstore",
                 "-exclude", "org.h2.mvstore.db");
@@ -663,6 +673,8 @@ public class Build extends BuildBase {
                 File.pathSeparator + "ext/org.osgi.enterprise-" + OSGI_VERSION + ".jar" +
                 File.pathSeparator + "ext/jts-core-" + JTS_VERSION + ".jar" +
                 File.pathSeparator + "ext/asm-" + ASM_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-" + ARGON2_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-nolibs-" + ARGON2_VERSION + ".jar" +
                 File.pathSeparator + "ext/junit-jupiter-api-" + JUNIT_VERSION + ".jar",
                 "-subpackages", "org.h2",
                 "-package",
@@ -892,6 +904,8 @@ public class Build extends BuildBase {
                 File.pathSeparator + "ext/jts-core-" + JTS_VERSION + ".jar" +
                 File.pathSeparator + "ext/slf4j-api-" + SLF4J_VERSION + ".jar" +
                 File.pathSeparator + "ext/slf4j-nop-" + SLF4J_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-" + ARGON2_VERSION + ".jar" +
+                File.pathSeparator + "ext/de.mkammerer.argon2-jvm-nolibs-" + ARGON2_VERSION + ".jar" +
                 File.pathSeparator + "ext/asm-" + ASM_VERSION + ".jar" +
                 File.pathSeparator + javaToolsJar;
         int version = getJavaVersion();
