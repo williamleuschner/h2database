@@ -7,12 +7,12 @@ import de.mkammerer.argon2.Argon2Helper;
 public class Argon2Singleton {
 
   private static Argon2Singleton singleton;
-  private static int MAX_MILLIS = 1000;
-  private static int MAX_MEM_KB = 65536;
-  private static int MAX_PARALLELISM = 4;
+  private static final int MAX_MILLIS = 1000;
+  private static final int MAX_MEM_KB = 65536;
+  private static final int MAX_PARALLELISM = 4;
 
-  private Argon2 a2;
-  private int iteration_count;
+  private final Argon2 a2;
+  private final int iteration_count;
 
   private Argon2Singleton() {
     this.a2 = Argon2Factory.create();
