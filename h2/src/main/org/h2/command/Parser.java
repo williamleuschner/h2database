@@ -7240,7 +7240,7 @@ public class Parser {
             return parseNumericType(false);
         //Added for CSCI 621
         case "PASSWORD":
-
+            break;
         case "SMALLDATETIME":
             return parseDateTimeType(true);
         case "TIME":
