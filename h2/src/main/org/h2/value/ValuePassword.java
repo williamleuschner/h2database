@@ -1,7 +1,11 @@
 package org.h2.value;
 
+import static org.h2.value.TypeInfo.TYPE_PASSWORD;
+
 import org.h2.engine.CastDataProvider;
+import org.h2.engine.Constants;
 import org.h2.engine.SysProperties;
+import org.h2.message.DbException;
 import org.h2.util.Argon2Singleton;
 import org.h2.util.StringUtils;
 
@@ -9,8 +13,24 @@ import org.h2.util.StringUtils;
  * Implementation of the PASSWORD data type.
  */
 public final class ValuePassword extends ValueStringBase {
+  private char[] unhashed;
+
   private ValuePassword(String value) {
-    super(Argon2Singleton.get().hash(value.toCharArray()));
+    // Satisfy Java's requirements.  If the value should be hashed, it will
+    // be overwritten very shortly.  The hashed value is well below the
+    // maximum string length.
+    super(value);
+    // If we're constructing this with something that is already an argon2
+    // hash, don't try to hash it again.
+    if (value.startsWith("$argon2")) {
+      this.unhashed = null;
+    } else {
+      // If it isn't an argon2 hash already, hash it, overwrite the stored
+      // value, and save the unhashed value in memory so that we can verify
+      // passwords later.
+      this.unhashed = value.toCharArray();
+      this.value = Argon2Singleton.get().hash(this.unhashed);
+    }
   }
 
   @Override
@@ -21,17 +41,30 @@ public final class ValuePassword extends ValueStringBase {
   @Override
   public int compareTypeSafe(Value v, CompareMode mode,
       CastDataProvider provider) {
-    char[] other_pass = v.convertToChar().getString().toCharArray();
-    if (Argon2Singleton.get().verify(convertToChar().getString(), other_pass)) {
-      return 0;
+    // If both of these are TYPE_PASSWORD, and one of them has an unhashed
+    // value stored still, verify the password.  If not, compare as with CHAR.
+    if (v.getType() == TYPE_PASSWORD) {
+      ValuePassword vp = (ValuePassword) v;
+      if (vp.unhashed != null) {
+        if (Argon2Singleton.get().verify(convertToChar().getString(),
+            vp.unhashed)) {
+          return 0;
+        }
+      } else if (this.unhashed != null) {
+        if (Argon2Singleton.get().verify(v.convertToChar().getString(),
+            this.unhashed)) {
+          return 0;
+        }
+      }
     } else {
-      // This is almost certainly the wrong behavior, because it forces
-      // mismatched passwords to be less than other passwords.  But password
-      // hashes aren't really orderable?  Particularly because making a new
-      // password hash also creates a new salt, so repeated invocations with
-      // the same string will have different orderings.
-      return -1;
+      // If the other value is not a password, try verifying it.
+      if (Argon2Singleton.get().verify(convertToChar().getString(),
+          v.convertToChar().getString().toCharArray())) {
+        return 0;
+      }
     }
+    // In all other cases, fall back to string comparison.
+    return mode.compareString(value, ((ValuePassword) v).value, false);
   }
 
   @Override

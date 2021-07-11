@@ -353,7 +353,8 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             GROUP_OTHER, GROUP_OTHER, GROUP_OTHER, GROUP_OTHER, GROUP_OTHER,
             // ARRAY, ROW
             GROUP_COLLECTION, GROUP_COLLECTION,
-            //
+            // PASSWORD
+            GROUP_OTHER,
     };
 
     private static final String NAMES[] = {
@@ -371,6 +372,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             "INTERVAL HOUR TO MINUTE", "INTERVAL HOUR TO SECOND", "INTERVAL MINUTE TO SECOND", //
             "JAVA_OBJECT", "ENUM", "GEOMETRY", "JSON", "UUID", //
             "ARRAY", "ROW", //
+            "PASSWORD", //
     };
 
     /**

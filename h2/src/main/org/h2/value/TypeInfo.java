@@ -208,7 +208,7 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
     public static final TypeInfo TYPE_ROW_EMPTY;
 
     /**
-     * PASSWORD type
+     * PASSWORD type.
      */
     public static final TypeInfo TYPE_PASSWORD;
 
@@ -280,7 +280,6 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         //PASSWORD
         infos[Value.PASSWORD] = TYPE_PASSWORD = new TypeInfo(Value.PASSWORD);
         TYPE_INFOS_BY_VALUE_TYPE = infos;
-
     }
 
     /**
@@ -508,6 +507,8 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
                 throw new IllegalArgumentException();
             }
             return new TypeInfo(Value.ROW, -1L, -1, extTypeInfo);
+        case Value.PASSWORD:
+            return new TypeInfo(Value.PASSWORD);
         }
         return TYPE_NULL;
     }
