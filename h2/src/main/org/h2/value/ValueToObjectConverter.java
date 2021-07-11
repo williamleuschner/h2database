@@ -402,6 +402,8 @@ public final class ValueToObjectConverter extends TraceObject {
             return Void.class;
         case Value.CHAR:
         case Value.VARCHAR:
+        //Added for CSCI 621 Password datatype
+        case Value.PASSWORD:
         case Value.VARCHAR_IGNORECASE:
         case Value.ENUM:
             return String.class;
@@ -501,6 +503,8 @@ public final class ValueToObjectConverter extends TraceObject {
             return null;
         case Value.CHAR:
         case Value.VARCHAR:
+        //Added for CSCI 621 Password datatype
+        case Value.PASSWORD:
         case Value.VARCHAR_IGNORECASE:
         case Value.ENUM:
             return value.getString();

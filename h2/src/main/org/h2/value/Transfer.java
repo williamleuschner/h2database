@@ -85,8 +85,11 @@ public final class Transfer {
     private static final int BINARY = 30;
     private static final int DECFLOAT = 31;
 
+    //Added for CSCI 621 Password datatype
+    private static final int PASSWORD = 44;
+
     private static final int[] VALUE_TO_TI = new int[Value.TYPE_COUNT + 1];
-    private static final int[] TI_TO_VALUE = new int[45];
+    private static final int[] TI_TO_VALUE = new int[46];
 
     static {
         addType(-1, Value.UNKNOWN);
@@ -132,6 +135,8 @@ public final class Transfer {
         addType(41, Value.TIME_TZ);
         addType(42, Value.BINARY);
         addType(43, Value.DECFLOAT);
+        //Added for CSCI 621 Password datatype
+        addType(PASSWORD, Value.PASSWORD);
     }
 
     private static void addType(int typeInformationType, int valueType) {
@@ -456,6 +461,8 @@ public final class Transfer {
         case Value.BIGINT:
         case Value.DATE:
         case Value.UUID:
+        //Added for CSCI 621 Password datatype
+        case Value.PASSWORD:
             break;
         case Value.CHAR:
         case Value.VARCHAR:
@@ -617,6 +624,8 @@ public final class Transfer {
         case Value.BIGINT:
         case Value.DATE:
         case Value.UUID:
+        //Added for CSCI 621 Password datatype
+        case Value.PASSWORD:
             break;
         case Value.CHAR:
         case Value.VARCHAR:
@@ -626,6 +635,8 @@ public final class Transfer {
         case Value.DECFLOAT:
         case Value.JAVA_OBJECT:
         case Value.JSON:
+        //Added for CSCI 621 Password datatype
+        //case Value.PASSWORD:
             precision = readInt();
             break;
         case Value.CLOB:
@@ -870,6 +881,10 @@ public final class Transfer {
             writeInt(CHAR);
             writeString(v.getString());
             break;
+        //Added for CSCI 621 Password datatype
+        case Value.PASSWORD:
+            writeInt(PASSWORD);
+            writeString(v.getString());
         case Value.BLOB: {
             writeInt(BLOB);
             ValueBlob lob = (ValueBlob) v;
@@ -1076,6 +1091,9 @@ public final class Transfer {
             return ValueVarcharIgnoreCase.get(readString());
         case CHAR:
             return ValueChar.get(readString());
+        //Added for CSCI 621 Password datatype
+        case Value.PASSWORD:
+            return ValuePassword.get(readString());
         case BLOB: {
             long length = readLong();
             if (length == -1) {

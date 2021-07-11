@@ -208,7 +208,7 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
     public static final TypeInfo TYPE_ROW_EMPTY;
 
     /**
-     * PASSWORD type.
+     * PASSWORD type. Added for CSCI 621 Password datatype
      */
     public static final TypeInfo TYPE_PASSWORD;
 
@@ -232,6 +232,8 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         infos[Value.VARCHAR] = TYPE_VARCHAR = new TypeInfo(Value.VARCHAR);
         infos[Value.CLOB] = TYPE_CLOB = new TypeInfo(Value.CLOB);
         infos[Value.VARCHAR_IGNORECASE] = TYPE_VARCHAR_IGNORECASE = new TypeInfo(Value.VARCHAR_IGNORECASE);
+        //Added for CSCI 621 Password datatype
+        infos[Value.PASSWORD] = TYPE_PASSWORD = new TypeInfo(Value.PASSWORD);
         // BINARY
         infos[Value.BINARY] = TYPE_BINARY = new TypeInfo(Value.BINARY, -1L);
         infos[Value.VARBINARY] = TYPE_VARBINARY = new TypeInfo(Value.VARBINARY);
@@ -277,8 +279,6 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         infos[Value.ARRAY] = TYPE_ARRAY_UNKNOWN = new TypeInfo(Value.ARRAY);
         infos[Value.ROW] = TYPE_ROW_EMPTY = new TypeInfo(Value.ROW, -1L, -1, //
                 new ExtTypeInfoRow(new LinkedHashMap<>()));
-        //PASSWORD
-        infos[Value.PASSWORD] = TYPE_PASSWORD = new TypeInfo(Value.PASSWORD);
         TYPE_INFOS_BY_VALUE_TYPE = infos;
     }
 
@@ -327,6 +327,8 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         case Value.BIGINT:
         case Value.DATE:
         case Value.UUID:
+        //Added fpr CSCI 621 Password datatype
+        case Value.PASSWORD:
             return TYPE_INFOS_BY_VALUE_TYPE[type];
         case Value.UNKNOWN:
             return TYPE_UNKNOWN;
@@ -346,6 +348,9 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
                 precision = 1;
             }
             return new TypeInfo(Value.VARCHAR, precision);
+        //Added fpr CSCI 621 Password datatype
+        //case Value.PASSWORD:
+        //    return new TypeInfo(Value.PASSWORD);
         case Value.CLOB:
             if (precision < 1) {
                 return TYPE_CLOB;
@@ -507,8 +512,6 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
                 throw new IllegalArgumentException();
             }
             return new TypeInfo(Value.ROW, -1L, -1, extTypeInfo);
-        case Value.PASSWORD:
-            return new TypeInfo(Value.PASSWORD);
         }
         return TYPE_NULL;
     }
@@ -973,6 +976,9 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
      */
     public long getPrecision() {
         switch (valueType) {
+        //Added fpr CSCI 621 Password datatype
+        case Value.PASSWORD:
+            return Constants.MAX_STRING_LENGTH;
         case Value.UNKNOWN:
             return -1L;
         case Value.NULL:
@@ -1105,6 +1111,8 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         case Value.UUID:
         case Value.ARRAY:
         case Value.ROW:
+        //Added for CSCI 621 Password datatype
+        case Value.PASSWORD:
             return 0;
         case Value.NUMERIC:
             return scale >= 0 ? scale : 0;
@@ -1149,6 +1157,8 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         case Value.CHAR:
             return precision >= 0 ? (int) precision : 1;
         case Value.VARCHAR:
+        //Added for CSCI 621 Password datatype
+        case Value.PASSWORD:
         case Value.VARCHAR_IGNORECASE:
         case Value.JSON:
             return precision >= 0 ? (int) precision : Constants.MAX_STRING_LENGTH;
@@ -1245,6 +1255,8 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         case Value.BLOB:
         case Value.JAVA_OBJECT:
         case Value.JSON:
+        //Added for CSCI 621 Password datatype
+        case Value.PASSWORD:
             builder.append(Value.getTypeName(valueType));
             if (precision >= 0L) {
                 builder.append('(').append(precision).append(')');

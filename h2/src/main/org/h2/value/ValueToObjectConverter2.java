@@ -159,6 +159,12 @@ public final class ValueToObjectConverter2 extends TraceObject {
             v = (s == null) ? ValueNull.INSTANCE : ValueChar.get(s);
             break;
         }
+        //Added for CSCI 621 Password datatype
+        case Value.PASSWORD: {
+            String s = rs.getString(columnIndex);
+            v = (s == null) ? ValueNull.INSTANCE : ValuePassword.get(s);
+            break;
+        }
         case Value.VARCHAR: {
             String s = rs.getString(columnIndex);
             v = (s == null) ? ValueNull.INSTANCE : ValueVarchar.get(s, session);

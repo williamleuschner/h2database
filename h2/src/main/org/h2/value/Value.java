@@ -266,8 +266,9 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
 
     /**
      * The value type for PASSWORD values.
+     * Added for CSCI 621 Password datatype
      */
-    public static final int PASSWORD = ROW + 1;
+    public static final int PASSWORD = ROW +1;
 
     /**
      * The number of value types.
@@ -353,13 +354,13 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             GROUP_OTHER, GROUP_OTHER, GROUP_OTHER, GROUP_OTHER, GROUP_OTHER,
             // ARRAY, ROW
             GROUP_COLLECTION, GROUP_COLLECTION,
-            // PASSWORD
-            GROUP_OTHER,
+            // Added for CSCI 621 PASSWORD datatype
+            GROUP_OTHER
     };
 
     private static final String NAMES[] = {
             "NULL", //
-            "CHARACTER", "CHARACTER VARYING", "CHARACTER LARGE OBJECT", "VARCHAR_IGNORECASE", //
+            "CHARACTER", "CHARACTER VARYING", "CHARACTER LARGE OBJECT", "VARCHAR_IGNORECASE",  //
             "BINARY", "BINARY VARYING", "BINARY LARGE OBJECT", //
             "BOOLEAN", //
             "TINYINT", "SMALLINT", "INTEGER", "BIGINT", //
@@ -372,7 +373,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             "INTERVAL HOUR TO MINUTE", "INTERVAL HOUR TO SECOND", "INTERVAL MINUTE TO SECOND", //
             "JAVA_OBJECT", "ENUM", "GEOMETRY", "JSON", "UUID", //
             "ARRAY", "ROW", //
-            "PASSWORD", //
+            "PASSWORD" //
     };
 
     /**
@@ -1121,6 +1122,9 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             return convertToChar(targetType, provider, conversionMode, column);
         case VARCHAR:
             return convertToVarchar(targetType, provider, conversionMode, column);
+        //TODO
+        //case PASSWORD:
+        //    return convertToPassword();
         case CLOB:
             return convertToClob(targetType, conversionMode, column);
         case VARCHAR_IGNORECASE:

@@ -116,6 +116,8 @@ public class DataType {
         DataType dataType = new DataType();
         dataType.defaultPrecision = dataType.maxPrecision = dataType.minPrecision = ValueNull.PRECISION;
         add(Value.NULL, Types.NULL, dataType, "NULL");
+        //Added FOR CSCI 621: PASSWORD uses sql type char since hash is always the same length
+        add(Value.PASSWORD, Types.CHAR, createString(true,true), "PASSWORD");
         add(Value.CHAR, Types.CHAR, createString(true, true),
                 "CHARACTER", "CHAR", "NCHAR", "NATIONAL CHARACTER", "NATIONAL CHAR");
         add(Value.VARCHAR, Types.VARCHAR, createString(true, false),
@@ -327,6 +329,7 @@ public class DataType {
         if (type == Value.UNKNOWN) {
             throw DbException.get(ErrorCode.UNKNOWN_DATA_TYPE_1, "?");
         }
+
         if (type >= Value.NULL && type < Value.TYPE_COUNT) {
             return TYPES_BY_VALUE_TYPE[type];
         }
@@ -703,7 +706,8 @@ public class DataType {
      * @return true if the value type is a String type
      */
     public static boolean isStringType(int type) {
-        return type == Value.VARCHAR || type == Value.CHAR || type == Value.VARCHAR_IGNORECASE;
+        //Added Modified for CSCI 621 Password datatype
+        return type == Value.VARCHAR || type == Value.CHAR || type == Value.VARCHAR_IGNORECASE || type == Value.PASSWORD;
     }
 
     /**
